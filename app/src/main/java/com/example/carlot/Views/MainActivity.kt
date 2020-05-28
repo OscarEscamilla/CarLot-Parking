@@ -41,19 +41,19 @@ class MainActivity : AppCompatActivity() {
         navigation_bottom!!.setOnNavigationItemSelectedListener {item: MenuItem ->
             when(item.itemId){
                 R.id.item_home -> {
-                    Toast.makeText(this, "home", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "home", Toast.LENGTH_SHORT).show()
                     fragment = HomeFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.contenedor_fragments, fragment!!).commit()
                     true
                 }
                 R.id.item_parks -> {
-                    Toast.makeText(this, "park", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "park", Toast.LENGTH_SHORT).show()
                     fragment = ParksFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.contenedor_fragments, fragment!!).commit()
                     true
                 }
                 R.id.item_profile -> {
-                    Toast.makeText(this, "profile", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "profile", Toast.LENGTH_SHORT).show()
                     fragment = ProfileFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.contenedor_fragments, fragment!!).commit()
                     true
