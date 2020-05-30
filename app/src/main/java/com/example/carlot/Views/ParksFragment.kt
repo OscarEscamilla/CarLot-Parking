@@ -2,19 +2,18 @@ package com.example.carlot.Views
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.carlot.Models.Parks
-
 import com.example.carlot.R
 import com.example.carlot.Views.Adapters.ParksAdapter
 import org.json.JSONArray
@@ -41,13 +40,17 @@ class ParksFragment : Fragment() {
     var adapter: RecyclerView.Adapter<*>? = null
     var layout_manager: RecyclerView.LayoutManager? = null
 
+    var toolbar: Toolbar? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        setHasOptionsMenu(true);
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,19 +59,52 @@ class ParksFragment : Fragment() {
         // Inflate the layout for this fragment
         vista = inflater.inflate(R.layout.fragment_parks, container, false)
 
-
-
         recycler_parks = vista!!.findViewById(R.id.rv_parks)
         recycler_parks?.hasFixedSize(true)
         // setter de layout manager a el recycler view
         layout_manager = GridLayoutManager(context, 2)
         recycler_parks?.layoutManager = layout_manager
 
+        toolbar = vista?.findViewById(R.id.toolbar_fragment_parks)
+        //toolbar.inflateMenu()
+
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
         getParks()
 
         return vista
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_toolbar_park, menu)
+
+
+        val item_search = menu.findItem(R.id.app_bar_search)
+        val searchView: SearchView = item_search.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                Log.i("query_submit", query)
+                return false
+            }
+            override fun onQueryTextChange(newText: String): Boolean {
+                Log.i("query_text", newText)
+                return false
+            }
+        })
+
+
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+    }
+
+
 
     fun getParks(){
         // Instantiate the RequestQueue.
@@ -134,6 +170,11 @@ class ParksFragment : Fragment() {
             }
     }
 }
+
+private fun MenuInflater.inflate(menuToolbarPark: Int) {
+
+}
+
 
 private fun RecyclerView.hasFixedSize(b: Boolean) {
 
