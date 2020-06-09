@@ -4,4 +4,8 @@ import com.example.carlot.Services.ApiPark
 
 class User: ApiPark(){
 
+    init{
+
+    }
+
 }

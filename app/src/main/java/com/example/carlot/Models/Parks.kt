@@ -19,6 +19,10 @@ class Parks (){
     var image: String? = null
     var tarifa: String? = null
 
+    var data: Parks? = null
+
+
+
     constructor(id: Int,
                 name: String,
                 calle: String,

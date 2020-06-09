@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.carlot.Interfaces.ClickListener
 import com.example.carlot.Models.Parks
 import com.example.carlot.R
 import com.example.carlot.Views.ParksFragment
 import com.squareup.picasso.Picasso
 
-class ParksAdapter(items: ArrayList<Parks>, contexto: Context): RecyclerView.Adapter<ParksAdapter.ViewHolder>() {
+class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: ClickListener): RecyclerView.Adapter<ParksAdapter.ViewHolder>() {
 
     var items: ArrayList<Parks>
     var contexto: Context
@@ -25,7 +26,7 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context): RecyclerView.Ada
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParksAdapter.ViewHolder {
         val vista = LayoutInflater.from(contexto).inflate(R.layout.item_park, parent, false)
-        var view_holder =  ViewHolder(vista)
+        var view_holder =  ViewHolder(vista, listener)
         return view_holder
     }
 
@@ -41,20 +42,30 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context): RecyclerView.Ada
 
         Picasso.get()
             .load(item.image)
-            .placeholder(R.drawable.car)
+            .placeholder(R.drawable.placeholder)
             .error(R.drawable.car)
             .into(holder.img_park);
+
+
     }
 
-    // clas holder
-    class ViewHolder(vista: View): RecyclerView.ViewHolder(vista){
+    // class holder
+    class ViewHolder(vista: View, listener: ClickListener): RecyclerView.ViewHolder(vista), View.OnClickListener{
         var v = vista
         var tv_name: TextView? = null
         var img_park: ImageView? = null
 
+        var item_click_listener: ClickListener? = null
+
         init {
-            tv_name = v.findViewById(R.id.tv_name_park)
-            img_park = v.findViewById(R.id.img_park)
+            this.tv_name = v.findViewById(R.id.tv_name_park)
+            this.img_park = v.findViewById(R.id.img_park)
+            this.item_click_listener = listener
+            v.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            this.item_click_listener?.onClick(v!!, adapterPosition);
         }
 
     }

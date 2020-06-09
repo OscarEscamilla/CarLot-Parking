@@ -1,8 +1,10 @@
 package com.example.carlot.Views
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -13,6 +15,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.carlot.Interfaces.ClickListener
 import com.example.carlot.Models.Parks
 import com.example.carlot.R
 import com.example.carlot.Views.Adapters.ParksAdapter
@@ -42,12 +45,17 @@ class ParksFragment : Fragment() {
 
     var toolbar: Toolbar? = null
 
+    var parks: ArrayList<Parks>? = null
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
         setHasOptionsMenu(true);
     }
 
@@ -70,7 +78,8 @@ class ParksFragment : Fragment() {
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
-        getParks()
+        // valida si los datos del web service ya fueron traidos para evitar peticiones innecesarias
+        validaPersistenceDatosParks()
 
         return vista
     }
@@ -94,23 +103,47 @@ class ParksFragment : Fragment() {
             }
         })
 
-
-
         super.onCreateOptionsMenu(menu, inflater)
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.item_map -> {
+                Toast.makeText(context, "MAPA", Toast.LENGTH_SHORT).show()
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
+    private fun validaPersistenceDatosParks(){
+        val TAG = "validate-request-ws"
+        Log.e(TAG, "park value is " + this.parks)
+        if (this.parks == null){
+            Log.e(TAG, "entro al if para realizar la peticion")
+            getParks()
+        } else {
+            Log.e(TAG, "entro al else para NO realizar la peticion")
+            setAdapterRecycler()
+        }
+    }
+    private fun setAdapterRecycler(){
+        // setter de el adapter a la lista
+        adapter = ParksAdapter(this.parks!!, context!!, object: ClickListener{
+            override fun onClick(v: View, i: Int) {
+                // funcion que lanza intent a activity detalle
+                lanzarDetalle(parks!!.get(i))
+            }
 
+        })
+        recycler_parks?.adapter = adapter
+    }
 
 
     fun getParks(){
         // Instantiate the RequestQueue.
         val queue = Volley.newRequestQueue(context)
         val url = "https://carlotapinode.herokuapp.com/get_all_parks"
-        var parks = ArrayList<Parks>()
+        parks = ArrayList<Parks>()
         // Request a string response from the provided URL.
         val stringRequest = StringRequest(
             Request.Method.GET, url,
@@ -120,7 +153,7 @@ class ParksFragment : Fragment() {
                 for (i in 0..data.length() - 1){
                     var item = JSONObject(data.get(i).toString())
 
-                    parks.add(Parks(
+                    parks!!.add(Parks(
                         item.get("id") as Int,
                         item.get("nombre_park") as String,
                         item.get("calle") as String,
@@ -140,10 +173,8 @@ class ParksFragment : Fragment() {
                     ))
 
                 }
-                // setter de el adapter a la lista
-                adapter = ParksAdapter(parks, context!!)
-                recycler_parks?.adapter = adapter
 
+                setAdapterRecycler()
             },
             Response.ErrorListener {
                 Log.i("eRROR", "ERROR")
@@ -151,6 +182,29 @@ class ParksFragment : Fragment() {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest)
+    }
+
+    private fun lanzarDetalle(park: Parks){
+        var i = Intent(context, DetalleParkActivity::class.java)
+        i.putExtra("id", park.id)
+        i.putExtra("name", park.name)
+        i.putExtra("calle", park.calle)
+        i.putExtra("colonia", park.colonia)
+        i.putExtra("numero_ext", park.numero_ext)
+        i.putExtra("stock", park.stock)
+        i.putExtra("dia_ini", park.dia_ini)
+        i.putExtra("dia_fin", park.dia_fin)
+        i.putExtra("hora_apertura", park.hora_apertura)
+        i.putExtra("hora_cierre", park.hora_cierre)
+        i.putExtra("descripcion", park.descripcion)
+        i.putExtra("id_person", park.id_person)
+        i.putExtra("longitud", park.longitud)
+        i.putExtra("latitud", park.latitud)
+        i.putExtra("image", park.image)
+        i.putExtra("tarifa", park.tarifa)
+        startActivity(i)
+        Toast.makeText(context, park.name , Toast.LENGTH_SHORT).show()
+
     }
 
     companion object {
@@ -169,7 +223,11 @@ class ParksFragment : Fragment() {
                 }
             }
     }
+
+
 }
+
+
 
 private fun MenuInflater.inflate(menuToolbarPark: Int) {
 
