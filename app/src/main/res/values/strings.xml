@@ -12,4 +12,6 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string name="google_maps_key">AIzaSyBcFwdODg7-0Bs3TRUNx_r-9H3wbXHpIwE</string>
 </resources>

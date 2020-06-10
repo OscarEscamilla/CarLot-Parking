@@ -57,6 +57,8 @@ class ParksFragment : Fragment() {
         }
 
         setHasOptionsMenu(true);
+        // valida si los datos del web service ya fueron traidos para evitar peticiones innecesarias
+        validaPersistenceDatosParks()
     }
 
 
@@ -78,8 +80,7 @@ class ParksFragment : Fragment() {
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
-        // valida si los datos del web service ya fueron traidos para evitar peticiones innecesarias
-        validaPersistenceDatosParks()
+
 
         return vista
     }
@@ -110,7 +111,8 @@ class ParksFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.item_map -> {
-                Toast.makeText(context, "MAPA", Toast.LENGTH_SHORT).show()
+                var i = Intent(context, MapActivity::class.java)
+                startActivity(i)
             }
         }
         return super.onOptionsItemSelected(item)

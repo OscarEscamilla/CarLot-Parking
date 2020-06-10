@@ -43,7 +43,7 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: Cli
         Picasso.get()
             .load(item.image)
             .placeholder(R.drawable.placeholder)
-            .error(R.drawable.car)
+            .error(R.drawable.placeholder)
             .into(holder.img_park);
 
 

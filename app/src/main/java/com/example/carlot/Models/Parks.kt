@@ -19,7 +19,7 @@ class Parks (){
     var image: String? = null
     var tarifa: String? = null
 
-    var data: Parks? = null
+    var  data_response: String? = null
 
 
 
