@@ -5,6 +5,7 @@ import android.location.LocationManager
 import android.location.LocationProvider
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.example.carlot.R
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -30,11 +31,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Con
     private var mGoogleApiClient: GoogleApiClient? = null
 
 
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
@@ -45,17 +41,25 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Con
             .addApi()
             .build()*/
 
+        val toolbar: Toolbar = findViewById(R.id.toolbar_maps)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
 
         mapFragment?.getMapAsync(this)
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
         val ubicacion = LatLng(-34.0, 151.0)
-
         mMap.addMarker(MarkerOptions().position(ubicacion).title("maker in sudney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ubicacion))
     }

@@ -55,7 +55,6 @@ class ParksFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
         setHasOptionsMenu(true);
         // valida si los datos del web service ya fueron traidos para evitar peticiones innecesarias
         validaPersistenceDatosParks()
@@ -69,6 +68,13 @@ class ParksFragment : Fragment() {
         // Inflate the layout for this fragment
         vista = inflater.inflate(R.layout.fragment_parks, container, false)
 
+        iniComponents()
+        return vista
+    }
+
+
+    // initilalize view components
+    fun iniComponents(){
         recycler_parks = vista!!.findViewById(R.id.rv_parks)
         recycler_parks?.hasFixedSize(true)
         // setter de layout manager a el recycler view
@@ -79,16 +85,11 @@ class ParksFragment : Fragment() {
         //toolbar.inflateMenu()
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-
-
-
-        return vista
     }
 
+    // initialize toolbar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_toolbar_park, menu)
-
-
         val item_search = menu.findItem(R.id.app_bar_search)
         val searchView: SearchView = item_search.actionView as SearchView
 
@@ -103,11 +104,10 @@ class ParksFragment : Fragment() {
                 return false
             }
         })
-
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-
+    // selection listener of items toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.item_map -> {
@@ -117,6 +117,8 @@ class ParksFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
     private fun validaPersistenceDatosParks(){
         val TAG = "validate-request-ws"
         Log.e(TAG, "park value is " + this.parks)
@@ -128,6 +130,7 @@ class ParksFragment : Fragment() {
             setAdapterRecycler()
         }
     }
+
     private fun setAdapterRecycler(){
         // setter de el adapter a la lista
         adapter = ParksAdapter(this.parks!!, context!!, object: ClickListener{
@@ -186,6 +189,7 @@ class ParksFragment : Fragment() {
         queue.add(stringRequest)
     }
 
+    // lauch to activity detail with intent and extras
     private fun lanzarDetalle(park: Parks){
         var i = Intent(context, DetalleParkActivity::class.java)
         i.putExtra("id", park.id)
@@ -228,6 +232,7 @@ class ParksFragment : Fragment() {
 
 
 }
+
 
 
 
