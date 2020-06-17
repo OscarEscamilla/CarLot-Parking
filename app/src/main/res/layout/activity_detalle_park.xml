@@ -24,7 +24,7 @@
 
     <ImageView
         android:id="@+id/img_detalle_park"
-        android:layout_width="423dp"
+        android:layout_width="match_parent"
         android:layout_height="279dp"
         android:src="@drawable/car"
         app:layout_constraintEnd_toEndOf="parent"

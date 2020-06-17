@@ -6,6 +6,7 @@ import android.net.wifi.p2p.WifiP2pManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.example.carlot.Models.Parks
 import com.example.carlot.R
 import java.util.*
 
@@ -25,6 +26,7 @@ class SplashActivity : AppCompatActivity() {
 
     // obtiene toda la informacion que es necesaria para iniciar la aplicacion y optimizacion
     fun getDataFirstStart(){
+
 
     }
 

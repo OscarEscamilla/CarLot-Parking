@@ -39,6 +39,7 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: Cli
         // binding de dsatos del aitem a los elementos de la vista
         var item = items.get(position)
         holder.tv_name?.text = item.name
+        holder.tv_precio?.text = item.tarifa
 
         Picasso.get()
             .load(item.image)
@@ -53,12 +54,14 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: Cli
     class ViewHolder(vista: View, listener: ClickListener): RecyclerView.ViewHolder(vista), View.OnClickListener{
         var v = vista
         var tv_name: TextView? = null
+        var tv_precio: TextView? = null
         var img_park: ImageView? = null
 
         var item_click_listener: ClickListener? = null
 
         init {
             this.tv_name = v.findViewById(R.id.tv_name_park)
+            this.tv_precio = v.findViewById(R.id.tv_tarifa)
             this.img_park = v.findViewById(R.id.img_park)
             this.item_click_listener = listener
             v.setOnClickListener(this)
