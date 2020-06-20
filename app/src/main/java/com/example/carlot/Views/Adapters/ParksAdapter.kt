@@ -18,6 +18,10 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: Cli
     var items: ArrayList<Parks>
     var contexto: Context
 
+
+
+
+
     init {
         this.items = items
         this.contexto = contexto

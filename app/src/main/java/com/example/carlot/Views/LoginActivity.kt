@@ -4,13 +4,16 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import com.example.carlot.Models.User
 import com.example.carlot.R
+import com.example.carlot.Services.ApiUtils
+import retrofit2.Callback
 
 class LoginActivity : AppCompatActivity() {
+
+    var api_utils = ApiUtils()
+    var api_service = api_utils.getAPIService()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,29 +28,24 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    fun validateUser(password: String, email: String ){
 
-    fun validateUser(){
-
-        var post_request: StringRequest? = null
-
-        var url = "http://carlotapinode.herokuapp.com/login"
-
-        post_request = StringRequest(
-            Request.Method.POST,
-            url,
-            Response.Listener{ response ->
-
-            },
-            Response.ErrorListener {
-
-            }
-        )
-
-        Volley.newRequestQueue(this).add(post_request)
+        //val enqueue = api_service!!.getUser(password, email)?.enqueue(callback)
 
     }
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
