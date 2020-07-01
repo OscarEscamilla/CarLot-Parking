@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".Views.PaymentActivity">
+
+    <Toolbar
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/colorPrimary"
+        android:title="Reserva"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+    </Toolbar>
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:textStyle=""
+            android:textSize="25dp"
+            android:textColor="@color/colorPrimary"
+            android:text="Necemitamos algunos datos y su reserva estara lista..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_marginBottom="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="ingrese la hora de su arrivo"
+                android:editable="false"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1">
+
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/btn_picker"
+                android:src="@drawable/ic_timer_black_24dp"
+                android:background="@color/colorPrimary"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            </ImageButton>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="174dp"
+            android:src="@drawable/credit"></ImageView>
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:hint="Numero de tarjeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+        <EditText
+            android:layout_marginTop="5dp"
+            android:hint="Nombre del titular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                android:hint="MM/YY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </EditText>
+            <EditText
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                android:hint="CVV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </EditText>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:text="CONFIRMAR"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </Button>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -47,18 +47,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             initViewMap()
         fusedLocationProviderClient = FusedLocationProviderClient(this)
         initLocationRequest()
-
-
     }
-
-
     // init fragment of map
     fun initViewMap() {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
-
     // init view components
     fun initViewComponets() {
         val toolbar: Toolbar = findViewById(R.id.toolbar_maps)

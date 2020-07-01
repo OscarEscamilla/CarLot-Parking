@@ -11,7 +11,7 @@ class RetrofitClient {
     fun getClient(baseUrl: String?): Retrofit? {
         if (retrofit == null) {
             retrofit = Retrofit.Builder()
-                .baseUrl("http://carlotapinode.herokuapp.com")
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }

@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,8 +46,12 @@ class ParksFragment : Fragment() {
     var layout_manager: RecyclerView.LayoutManager? = null
 
     var toolbar: Toolbar? = null
+    var progres_bar: ProgressBar? = null
 
     var parks: ArrayList<Parks>? = null
+
+
+    var progressBar: ProgressBar? = null
 
 
 
@@ -57,7 +63,21 @@ class ParksFragment : Fragment() {
         }
         setHasOptionsMenu(true);
         // valida si los datos del web service ya fueron traidos para evitar peticiones innecesarias
-        validaPersistenceDatosParks()
+        //validaPersistenceDatosParks()
+        getParks()
+        //Toast.makeText(context, "On create", Toast.LENGTH_LONG).show()
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        //Toast.makeText(context, "On start", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //Toast.makeText(context, "On resumee", Toast.LENGTH_LONG).show()
     }
 
 
@@ -69,6 +89,7 @@ class ParksFragment : Fragment() {
         vista = inflater.inflate(R.layout.fragment_parks, container, false)
 
         iniComponents()
+        //Toast.makeText(context, "On create view", Toast.LENGTH_LONG).show()
         return vista
     }
 
@@ -82,6 +103,7 @@ class ParksFragment : Fragment() {
         recycler_parks?.layoutManager = layout_manager
 
         toolbar = vista?.findViewById(R.id.toolbar_fragment_parks)
+        progres_bar = vista?.findViewById(R.id.progres_bar_parks)
         //toolbar.inflateMenu()
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
@@ -97,6 +119,7 @@ class ParksFragment : Fragment() {
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 Log.i("query_submit", query)
+
                 return false
             }
             override fun onQueryTextChange(newText: String): Boolean {
@@ -122,13 +145,9 @@ class ParksFragment : Fragment() {
     private fun validaPersistenceDatosParks(){
         val TAG = "validate-request-ws"
         Log.e(TAG, "park value is " + this.parks)
-        if (this.parks == null){
-            Log.e(TAG, "entro al if para realizar la peticion")
-            getParks()
-        } else {
-            Log.e(TAG, "entro al else para NO realizar la peticion")
-            setAdapterRecycler()
-        }
+
+        getParks()
+
     }
 
     private fun setAdapterRecycler(){
@@ -154,7 +173,6 @@ class ParksFragment : Fragment() {
             Request.Method.GET, url,
             Response.Listener<String> { response ->
                 var data = JSONArray(response)
-
                 for (i in 0..data.length() - 1){
                     var item = JSONObject(data.get(i).toString())
 
@@ -171,14 +189,13 @@ class ParksFragment : Fragment() {
                         item.get("hora_cierre") as String,
                         item.get("descripcion") as String,
                         item.get("id_person") as Int,
-                        item.get("longitud") as Int,
-                        item.get("latitud") as Int,
+                        item.get("longitud") as String,
+                        item.get("latitud") as String,
                         item.get("image") as String,
                         item.get("tarifa")  as String
                     ))
-
                 }
-
+                progres_bar!!.visibility = View.GONE
                 setAdapterRecycler()
             },
             Response.ErrorListener {
@@ -209,7 +226,7 @@ class ParksFragment : Fragment() {
         i.putExtra("image", park.image)
         i.putExtra("tarifa", park.tarifa)
         startActivity(i)
-        Toast.makeText(context, park.name , Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, park.name , Toast.LENGTH_SHORT).show()
 
     }
 

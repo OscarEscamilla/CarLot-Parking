@@ -9,11 +9,12 @@ import retrofit2.http.POST
 
 interface ApiCarLot {
 
-    @POST("/login")
     @FormUrlEncoded
+    @POST("/login")
     fun getUser(
-        @Field("password") password : String?,
-        @Field("email") email : String? ): Call<User?>?
+        @Field("password") password: String?,
+        @Field("email") email: String?
+    ): Call<User?>?
 
 
 

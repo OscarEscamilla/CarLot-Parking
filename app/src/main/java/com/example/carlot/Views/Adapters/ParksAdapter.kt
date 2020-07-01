@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.carlot.Interfaces.ClickListener
 import com.example.carlot.Models.Parks
 import com.example.carlot.R
-import com.example.carlot.Views.ParksFragment
 import com.squareup.picasso.Picasso
 
 class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: ClickListener): RecyclerView.Adapter<ParksAdapter.ViewHolder>() {
 
     var items: ArrayList<Parks>
+    var items_filtered: ArrayList<Parks>
     var contexto: Context
 
 
@@ -24,6 +24,7 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: Cli
 
     init {
         this.items = items
+        this.items_filtered = items
         this.contexto = contexto
     }
 
@@ -43,7 +44,7 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: Cli
         // binding de dsatos del aitem a los elementos de la vista
         var item = items.get(position)
         holder.tv_name?.text = item.name
-        holder.tv_precio?.text = item.tarifa
+        holder.tv_precio?.text = "$" + item.tarifa
 
         Picasso.get()
             .load(item.image)
@@ -53,6 +54,30 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: Cli
 
 
     }
+
+    fun filtrar(texto: String) {
+        // Elimina todos los datos del ArrayList que se cargan en los
+        // elementos del adaptador
+        items.clear()
+        // Si no hay texto: agrega de nuevo los datos del ArrayList copiado
+        // al ArrayList que se carga en los elementos del adaptador
+        if (texto.length == 0) {
+            items.addAll(items_filtered)
+        } else {
+            // Recorre todos los elementos que contiene el ArrayList copiado
+            // y dependiendo de si estos contienen el texto ingresado por el
+            // usuario los agrega de nuevo al ArrayList que se carga en los
+            // elementos del adaptador.
+            for (item: Parks in items_filtered) {
+                if (item.name?.toLowerCase()!!.contains(texto)) {
+                    items.add(item)
+                }
+            }
+        }
+        // Actualiza el adaptador para aplicar los cambios
+        notifyDataSetChanged()
+    }
+
 
     // class holder
     class ViewHolder(vista: View, listener: ClickListener): RecyclerView.ViewHolder(vista), View.OnClickListener{

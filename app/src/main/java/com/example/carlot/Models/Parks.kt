@@ -1,14 +1,5 @@
 package com.example.carlot.Models
 
-import android.content.Context
-import android.util.Log
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import org.json.JSONArray
-import org.json.JSONObject
-
 class Parks (){
 
     var id: Int? = null
@@ -23,8 +14,8 @@ class Parks (){
     var hora_cierre: String? = null
     var descripcion: String? = null
     var id_person: Int? = null
-    var longitud: Int? = null
-    var latitud: Int? = null
+    var longitud: String? = null
+    var latitud: String? = null
     var image: String? = null
     var tarifa: String? = null
 
@@ -32,22 +23,23 @@ class Parks (){
 
 
 
-    constructor(id: Int,
-                name: String,
-                calle: String,
-                colonia: String,
-                numero_ext: Int,
-                stock: Int,
-                dia_ini: String,
-                dia_fin: String,
-                hora_apertura: String,
-                hora_cierre: String,
-                descripcion: String,
-                id_person: Int,
-                longitud: Int,
-                latitud: Int,
-                image: String,
-                tarifa: String) : this() {
+    constructor(
+        id: Int,
+        name: String,
+        calle: String,
+        colonia: String,
+        numero_ext: Int,
+        stock: Int,
+        dia_ini: String,
+        dia_fin: String,
+        hora_apertura: String,
+        hora_cierre: String,
+        descripcion: String,
+        id_person: Int,
+        longitud: String,
+        latitud: String,
+        image: String,
+        tarifa: String) : this() {
 
         this.id = id
         this.name = name

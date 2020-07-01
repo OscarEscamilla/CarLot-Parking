@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.Toast
 
 import com.example.carlot.R
 
@@ -23,6 +25,11 @@ class HomeFragment: Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
+    // variables init
+
+    var ll_historial: LinearLayout? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -36,7 +43,13 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        var vista = inflater.inflate(R.layout.fragment_home, container, false)
+
+        ll_historial = vista.findViewById(R.id.ll_historial)
+        ll_historial?.setOnClickListener {
+            Toast.makeText(context,"clicked histori", Toast.LENGTH_SHORT).show()
+        }
+        return vista
     }
 
     companion object {

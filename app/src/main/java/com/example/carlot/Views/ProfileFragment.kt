@@ -1,5 +1,7 @@
 package com.example.carlot.Views
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -32,6 +34,7 @@ class ProfileFragment : Fragment() {
     var toolbar: Toolbar? = null
     var img_user: ImageView? = null
 
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +43,17 @@ class ProfileFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         setHasOptionsMenu(true);
+
+        // init shared prefereces
+        val MY_PREFERENCES = "carlot_preferences"
+        sharedPreferences = this.activity!!.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE)
+        val USER_KEY = "user"
+        if (sharedPreferences.contains(USER_KEY)){
+            Toast.makeText(context, sharedPreferences.getString(USER_KEY,"") , Toast.LENGTH_SHORT).show()
+        }
+
+
+
     }
 
     override fun onCreateView(
