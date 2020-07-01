@@ -120,7 +120,7 @@ class ProfileFragment : Fragment() {
                 Toast.makeText(context,"config",Toast.LENGTH_LONG).show()
             }
             R.id.logout ->{
-                Toast.makeText(context,"logout",Toast.LENGTH_LONG).show()
+
             }
 
         }

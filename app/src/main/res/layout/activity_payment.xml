@@ -50,11 +50,11 @@
 
             <ImageButton
                 android:id="@+id/btn_picker"
-                android:src="@drawable/ic_timer_black_24dp"
-                android:background="@color/colorPrimary"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryLight"
+                android:src="@drawable/ic_timer_black_24dp">
 
             </ImageButton>
 
