@@ -1,17 +1,33 @@
 package com.example.carlot.Views
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.Adapter
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.carlot.Models.Cars
 
 import com.example.carlot.R
+import com.example.carlot.Views.Adapters.CarsAdapter
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_profile.*
+import org.json.JSONArray
+import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +50,14 @@ class ProfileFragment : Fragment() {
     var toolbar: Toolbar? = null
     var img_user: ImageView? = null
 
+    var rv_cars: RecyclerView? = null
+
     lateinit var sharedPreferences: SharedPreferences
+
+
+
+    var itemsCars = ArrayList<Cars>()
+    var adapterCars: CarsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +74,9 @@ class ProfileFragment : Fragment() {
         if (sharedPreferences.contains(USER_KEY)){
             Toast.makeText(context, sharedPreferences.getString(USER_KEY,"") , Toast.LENGTH_SHORT).show()
         }
+
+
+        getCars("3")
 
 
 
@@ -103,6 +129,13 @@ class ProfileFragment : Fragment() {
             .into(img_user);
 
 
+        rv_cars = vista!!.findViewById(R.id.rv_cars)
+        // set layut manager to ReyclerView
+        var linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rv_cars?.layoutManager = linearLayoutManager
+        rv_cars?.itemAnimator = DefaultItemAnimator()
+
+
 
     }
 
@@ -125,5 +158,35 @@ class ProfileFragment : Fragment() {
 
         }
         return super.onOptionsItemSelected(item)
+    }
+
+
+    fun getCars(id_person: String) {
+        var gson = Gson()
+        // Instantiate the RequestQueue.
+        val queue = Volley.newRequestQueue(context)
+        val url = "https://carlotapinode.herokuapp.com/get_cars/$id_person"
+        // Request a string response from the provided URL.
+        val stringRequest = StringRequest(
+            Request.Method.GET, url,
+            Response.Listener<String> { response ->
+                var data = JSONArray(response)
+
+                for (i in 0..data.length() - 1){
+
+                    var user = gson.fromJson(data.get(i).toString(), Cars::class.java)
+                    itemsCars.add(user)
+
+                }
+                // init adapter
+                adapterCars = CarsAdapter( itemsCars!! , context!!)
+                rv_cars?.adapter = adapterCars
+                Log.e("cars:" , response.toString())
+            },
+            Response.ErrorListener {
+
+            })
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest)
     }
 }

@@ -8,13 +8,19 @@ class RetrofitClient {
 
     private var retrofit: Retrofit? = null
 
-    fun getClient(baseUrl: String?): Retrofit? {
+    final private var baseUrl = "http://carlotapinode.herokuapp.com"
+
+    fun getClientService(): ServiceCarlot? {
         if (retrofit == null) {
             retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
-        return retrofit
+
+        var client: ServiceCarlot? = retrofit?.create(ServiceCarlot::class.java)
+
+
+        return client
     }
 }

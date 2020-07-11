@@ -16,55 +16,57 @@
         android:layout_height="?attr/actionBarSize">
 
     </Toolbar>
+
+
     <LinearLayout
         android:orientation="vertical"
         android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <!--
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:textStyle=""
+                    android:textSize="25dp"
+                    android:textColor="@color/colorPrimary"
+                    android:text="Necemitamos algunos datos y su reserva estara lista..."
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_marginBottom="10dp"
-            android:textStyle=""
-            android:textSize="25dp"
-            android:textColor="@color/colorPrimary"
-            android:text="Necemitamos algunos datos y su reserva estara lista..."
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                </TextView>
 
-        </TextView>
+                <LinearLayout
+                    android:layout_marginBottom="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_marginBottom="2dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="ingrese la hora de su arrivo"
+                        android:editable="false"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="ingrese la hora de su arrivo"
-                android:editable="false"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1">
+                    </EditText>
 
-            </EditText>
+                    <ImageButton
+                        android:id="@+id/btn_picker"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimaryLight"
+                        android:src="@drawable/ic_timer_black_24dp">
 
-            <ImageButton
-                android:id="@+id/btn_picker"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryLight"
-                android:src="@drawable/ic_timer_black_24dp">
+                    </ImageButton>
 
-            </ImageButton>
-
-        </LinearLayout>
-
-        <ImageView
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="174dp"
-            android:src="@drawable/credit"></ImageView>
+                </LinearLayout>
+        -->
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="174dp"
+        android:src="@drawable/credit" />
 
         <EditText
             android:layout_marginTop="20dp"
@@ -102,6 +104,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_confimar"
             android:layout_marginTop="20dp"
             android:text="CONFIRMAR"
             android:textColor="@android:color/white"
@@ -109,9 +112,26 @@
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
         </Button>
 
+<!--
+        <ProgressBar
+            android:id="@+id/progres_bar"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ProgressBar>
+        <EditText
+            android:id="@+id/txt_process"
+            android:text="Procesando pago..."
+            android:textColor="@color/colorPrimaryLight"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </EditText>
+-->
 
 
     </LinearLayout>

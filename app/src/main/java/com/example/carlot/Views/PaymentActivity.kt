@@ -1,23 +1,34 @@
 package com.example.carlot.Views
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.app.TimePickerDialog.OnTimeSetListener
+import android.os.AsyncTask
 import android.os.Bundle
-import android.text.format.DateFormat.is24HourFormat
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
+import com.example.carlot.Models.User
+import com.example.carlot.Models.UserFake
 import com.example.carlot.R
-import java.sql.Time
-import java.text.DateFormat
-import java.util.*
+import com.example.carlot.Services.RetrofitClient
+import com.example.carlot.Services.ServiceCarlot
+import retrofit2.Call
+import retrofit2.Callback
 
 
-class PaymentActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener{
+class PaymentActivity : AppCompatActivity() {
 
     var btn_time_picker: ImageButton? = null
+    var btn_confirmar: Button? = null
 
+    var progressBar: ProgressBar? = null
+    var txt_process: TextView? = null
+
+
+
+    var hora: String? = null
+    var placas: String? = null
+    var id_park: String? = null
 
     var day = 0
     var month: Int = 0
@@ -30,13 +41,18 @@ class PaymentActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener,
     var myHour: Int = 0
     var myMinute: Int = 0
 
+    var serviceClient: ServiceCarlot? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
+        serviceClient = RetrofitClient().getClientService()
+
         initViewComponents()
 
+        cargarDataIntent()
+/*
         btn_time_picker?.setOnClickListener{
             val calendar: Calendar = Calendar.getInstance()
             day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -47,31 +63,58 @@ class PaymentActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener,
             minute = calendar.get(Calendar.MINUTE)
             val datePickerDialog = TimePickerDialog(this, this , hour, minute, android.text.format.DateFormat.is24HourFormat(this))
             datePickerDialog.show()
+        }*/
+    }
+
+    fun initViewComponents() {
+        btn_confirmar = findViewById(R.id.btn_confimar)
+        btn_confirmar?.setOnClickListener {
+            Toast.makeText(applicationContext, "confirm", Toast.LENGTH_SHORT).show()
+            //var peticion = Peticion()
+            //peticion.execute()
         }
+
+        txt_process?.visibility = View.GONE
+        progressBar?.visibility = View.GONE
+
     }
 
-    fun initViewComponents(){
-        btn_time_picker = findViewById(R.id.btn_picker)
+    fun cargarDataIntent(){
+
+        var extras = intent.extras
+
+        placas =  extras?.get("placas").toString()
+        hora =  extras?.get("hora_arrivo").toString()
+        id_park = extras?.get("id_park").toString()
+
+        Toast.makeText(this, "placas: $placas - hora: $hora", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        myHour = hourOfDay
-        myMinute = minute
-    }
-
-    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        /*
-        myDay = day
-        myYear = year
-        myMonth = month
-        val calendar: Calendar = Calendar.getInstance()
-        hour = calendar.get(Calendar.HOUR)
-        minute = calendar.get(Calendar.MINUTE)
-        val timePickerDialog = TimePickerDialog(this, this, hour, minute,
-            android.text.format.DateFormat.is24HourFormat(this))
-        timePickerDialog.show()*/
-    }
+//
+//    class Peticion: AsyncTask<Void, Void, Void>() {
+//
+//        override fun doInBackground(vararg params: Void?): Void {
+//            var service = RetrofitClient().getClientService()
+//            var response: Call<List<UserFake?>?>? = service?.getUsersGet()
+//
+//            var iterator = response?.execute()?.body()
+//
+//            iterator!!.forEach {
+//
+//                Log.e("name:", it?.name )
+//            }
+//
+//            //Log.e("response", response.toString())
+//            TODO("Not yet implemented")
+//        }
+//
+//    }
 
 
 
 }
+
+
+
+
+

@@ -16,10 +16,13 @@
         android:layout_height="170dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/logo"
         app:civ_border_color="#FFFF"
         app:civ_border_width="2dp" />
+
+
+
 
 
     <androidx.cardview.widget.CardView
@@ -87,6 +90,15 @@
                 android:pointerIcon="none"
                 android:text="SIGN UP"
                 android:textSize="15sp" />
+
+
+            <ProgressBar
+                android:id="@+id/pb_login"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </ProgressBar>
 
 
         </LinearLayout>

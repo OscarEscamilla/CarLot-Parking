@@ -55,8 +55,9 @@ class DetalleParkActivity : AppCompatActivity() {
         btn_float_reserva = findViewById(R.id.floatingActionButton)
 
         btn_float_reserva!!.setOnClickListener {
-            var intent: Intent = Intent(this, PaymentActivity::class.java)
-            startActivity(intent)
+//            var intent: Intent = Intent(this, PaymentActivity::class.java)
+//            startActivity(intent)
+            showAlertReserva()
             //Snackbar.make(it, "Reserva...", Snackbar.LENGTH_SHORT).show()
         }
     }
@@ -65,8 +66,13 @@ class DetalleParkActivity : AppCompatActivity() {
         var inflater = layoutInflater;
         var inflate_view = inflater.inflate(R.layout.alert_reserva, null)
         // init components from layorut inflate_view
-        var time_reserva: TimePicker = findViewById(R.id.timePicker)
+        var time_reserva: TimePicker = inflate_view.findViewById(R.id.timePicker)
+        var et_placas: EditText = inflate_view.findViewById(R.id.et_placas)
         // end init componenst
+        var horaReservaPicker: String? = null
+        time_reserva.setOnTimeChangedListener { view, hourOfDay, minute ->
+            horaReservaPicker = "$hourOfDay:$minute"
+        }
         var alert = AlertDialog.Builder(this)
 
         alert.setView(inflate_view);
@@ -75,6 +81,9 @@ class DetalleParkActivity : AppCompatActivity() {
         alert.setPositiveButton("Siguiente"){dialog, which ->
 
             var intent: Intent = Intent(this, PaymentActivity::class.java)
+            intent.putExtra("placas", et_placas.text)
+            intent.putExtra("hora_arrivo",horaReservaPicker)
+            intent.putExtra("id_park", park!!.id)
             startActivity(intent)
         }
 

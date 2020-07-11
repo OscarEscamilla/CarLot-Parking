@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "85426816461",
+    "firebase_url": "https://carlot-1574867126112.firebaseio.com",
+    "project_id": "carlot-1574867126112",
+    "storage_bucket": "carlot-1574867126112.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85426816461:android:c3714fbd5f525db463f084",
+        "android_client_info": {
+          "package_name": "com.example.carlot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85426816461-560egfgg5hnle0h6nk38fjv1orjm0t0l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAodzfnky4pT-i2wRzmNfBaGjTwqdl7Z6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85426816461-560egfgg5hnle0h6nk38fjv1orjm0t0l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
