@@ -1,19 +1,17 @@
 package com.example.carlot.Views
 
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
-import com.example.carlot.Models.User
-import com.example.carlot.Models.UserFake
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.carlot.R
 import com.example.carlot.Services.RetrofitClient
 import com.example.carlot.Services.ServiceCarlot
-import retrofit2.Call
-import retrofit2.Callback
 
 
 class PaymentActivity : AppCompatActivity() {
@@ -72,6 +70,7 @@ class PaymentActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "confirm", Toast.LENGTH_SHORT).show()
             //var peticion = Peticion()
             //peticion.execute()
+
         }
 
         txt_process?.visibility = View.GONE
@@ -88,6 +87,7 @@ class PaymentActivity : AppCompatActivity() {
         id_park = extras?.get("id_park").toString()
 
         Toast.makeText(this, "placas: $placas - hora: $hora", Toast.LENGTH_SHORT).show()
+
     }
 
 //
@@ -109,6 +109,8 @@ class PaymentActivity : AppCompatActivity() {
 //        }
 //
 //    }
+
+
 
 
 

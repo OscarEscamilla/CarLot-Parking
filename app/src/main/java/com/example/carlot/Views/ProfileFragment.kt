@@ -1,33 +1,30 @@
 package com.example.carlot.Views
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Adapter
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.example.carlot.Models.Cars
-
+import com.example.carlot.Models.User
 import com.example.carlot.R
+import com.example.carlot.Services.RetrofitClient
+import com.example.carlot.Services.ServiceCarlot
+import com.example.carlot.Utils.SessionManager
 import com.example.carlot.Views.Adapters.CarsAdapter
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_profile.*
 import org.json.JSONArray
-import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,20 +41,22 @@ class ProfileFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
+
     // vista
     private var vista: View? = null
-
     var toolbar: Toolbar? = null
     var img_user: ImageView? = null
-
+    var pb_cars: ProgressBar? = null
     var rv_cars: RecyclerView? = null
-
+    var gson: Gson? = null
     lateinit var sharedPreferences: SharedPreferences
-
-
-
+    // api service
+    var serviceCarLot: ServiceCarlot? = null
     var itemsCars = ArrayList<Cars>()
     var adapterCars: CarsAdapter? = null
+    var sessionManager: SessionManager? = null
+    var user: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,15 +67,29 @@ class ProfileFragment : Fragment() {
         setHasOptionsMenu(true);
 
         // init shared prefereces
-        val MY_PREFERENCES = "carlot_preferences"
-        sharedPreferences = this.activity!!.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE)
-        val USER_KEY = "user"
-        if (sharedPreferences.contains(USER_KEY)){
-            Toast.makeText(context, sharedPreferences.getString(USER_KEY,"") , Toast.LENGTH_SHORT).show()
-        }
+//        val MY_PREFERENCES = "carlot_preferences"
+//        sharedPreferences = this.activity!!.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE)
+//        val USER_KEY = "user"
+//        if (sharedPreferences.contains(USER_KEY)){
+//            Toast.makeText(context, sharedPreferences.getString(USER_KEY,"") , Toast.LENGTH_SHORT).show()
+//        }
+        // init session manager
+        sharedPreferences = this.activity!!.getSharedPreferences("Carlot", Context.MODE_PRIVATE)
+        sessionManager = SessionManager(sharedPreferences)
+        user = sessionManager!!.getSession()
+        Toast.makeText(context, user?.idPerson.toString(), Toast.LENGTH_SHORT).show()
+        // init variables
+        serviceCarLot = RetrofitClient().getClientService()
+        gson = Gson()
+        // end init variables
 
 
-        getCars("3")
+
+
+
+        getCarsRetrofit()
+
+
 
 
 
@@ -117,17 +130,15 @@ class ProfileFragment : Fragment() {
     fun initView(){
 
         toolbar = vista!!.findViewById(R.id.toolbar_profile);
-
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-
         img_user = vista!!.findViewById(R.id.img_user)
+        pb_cars = vista!!.findViewById(R.id.pb_cars)
 
         Picasso.get()
-            .load("https://is2-ssl.mzstatic.com/image/thumb/Music123/v4/4c/b4/a8/4cb4a822-8d40-8a5d-39c0-7388eff88e80/pr_source.png/800x800bb.jpeg")
+            .load(user?.image)
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .into(img_user);
-
 
         rv_cars = vista!!.findViewById(R.id.rv_cars)
         // set layut manager to ReyclerView
@@ -161,32 +172,40 @@ class ProfileFragment : Fragment() {
     }
 
 
-    fun getCars(id_person: String) {
-        var gson = Gson()
-        // Instantiate the RequestQueue.
-        val queue = Volley.newRequestQueue(context)
-        val url = "https://carlotapinode.herokuapp.com/get_cars/$id_person"
-        // Request a string response from the provided URL.
-        val stringRequest = StringRequest(
-            Request.Method.GET, url,
-            Response.Listener<String> { response ->
-                var data = JSONArray(response)
-
-                for (i in 0..data.length() - 1){
-
-                    var user = gson.fromJson(data.get(i).toString(), Cars::class.java)
-                    itemsCars.add(user)
+    fun getCarsRetrofit() {
+        showProgresBar()
+        var mCall = serviceCarLot?.getCars(user?.id.toString())
+        mCall?.enqueue(object : Callback<List<Cars>>{
+            override fun onResponse(
+                call: Call<List<Cars>?>?,
+                response: retrofit2.Response<List<Cars>?>?
+            ) {
+                if (response!!.isSuccessful()){
+                    var data = JSONArray(gson?.toJson(response.body()))
+                    for (i in 0..data.length() -1){
+                        var user = gson?.fromJson(data.get(i).toString(), Cars::class.java)
+                        itemsCars.add(user!!)
+                    }
+                    // init adapter
+                    adapterCars = CarsAdapter( itemsCars!! , context!!)
+                    rv_cars?.adapter = adapterCars
+                    hideProgresBar()
+                }
+            }
+            override fun onFailure(call: Call<List<Cars>?>, t: Throwable?) {
+                if (call.isCanceled()) {
 
                 }
-                // init adapter
-                adapterCars = CarsAdapter( itemsCars!! , context!!)
-                rv_cars?.adapter = adapterCars
-                Log.e("cars:" , response.toString())
-            },
-            Response.ErrorListener {
-
-            })
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest)
+            }
+        })
     }
+
+    fun showProgresBar(){
+        pb_cars?.visibility = View.VISIBLE
+    }
+
+    fun hideProgresBar(){
+        pb_cars?.visibility = View.GONE
+    }
+
 }

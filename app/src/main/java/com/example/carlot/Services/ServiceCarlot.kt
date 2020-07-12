@@ -1,9 +1,9 @@
 package com.example.carlot.Services
 
-import com.example.carlot.Models.CreateReservaBody
+import com.example.carlot.Models.Cars
+import com.example.carlot.Models.Request.BodyReserva
 import com.example.carlot.Models.Status
 import com.example.carlot.Models.User
-import com.example.carlot.Models.UserFake
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -19,11 +19,12 @@ interface ServiceCarlot {
 
 
     @POST("/create_reserva")
-    fun createReserva(@Body reserva: CreateReservaBody): Call<Status>
+    fun createReserva(@Body reserva: BodyReserva): Call<Status>
 
 
-    @GET("usersFake")
-    fun getUsersGet(): Call<List<UserFake?>?>?
+    @GET("/get_cars/{id}")
+    fun getCars(@Path("id") id: String): Call<List<Cars>>
+
 
 
 
