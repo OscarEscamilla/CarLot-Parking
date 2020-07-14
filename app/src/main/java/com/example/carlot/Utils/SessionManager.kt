@@ -1,22 +1,26 @@
 package com.example.carlot.Utils
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import com.example.carlot.Models.User
+import com.example.carlot.Views.LoginActivity
 import com.google.gson.Gson
 
-class SessionManager(sharedPreferences: SharedPreferences) {
+class SessionManager(sharedPreferences: SharedPreferences, context: Context) {
 
     val USER__SESSION_KEY = "user"
     var editor: SharedPreferences.Editor? = null
     var sharedPreferences: SharedPreferences? = null
     var user: User? = null
     var gson: Gson? = null
+    var context: Context? = null
 
     init {
         this.sharedPreferences = sharedPreferences
         this.editor = sharedPreferences.edit()
         this.gson = Gson()
+        this.context = context
     }
 
 
@@ -27,7 +31,10 @@ class SessionManager(sharedPreferences: SharedPreferences) {
     }
 
     fun deleteSession(){
-
+        editor?.clear()
+        editor?.commit()
+        var i = Intent(context, LoginActivity::class.java)
+        context?.startActivity(i)
     }
 
     fun getSession(): User? {

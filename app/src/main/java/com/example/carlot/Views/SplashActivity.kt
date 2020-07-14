@@ -1,28 +1,40 @@
 
 package com.example.carlot.Views
 
+import android.content.Context
 import android.content.Intent
 import android.net.wifi.p2p.WifiP2pManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import com.example.carlot.Models.Parks
+import com.example.carlot.Models.User
 import com.example.carlot.R
+import com.example.carlot.Utils.SessionManager
 import java.util.*
 
 class SplashActivity : AppCompatActivity() {
 
+    var sessionManager: SessionManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
 
-        validarSession()
+        //validarSession()
         getDataFirstStart()
         startApp()
         timer()
+
+
     }
+
+
+
+
+
 
     // obtiene toda la informacion que es necesaria para iniciar la aplicacion y optimizacion
     fun getDataFirstStart(){
@@ -30,9 +42,15 @@ class SplashActivity : AppCompatActivity() {
 
     }
 
-    // instacia la clase session manager y valida session para redirigir al login o a home
+    // instacia la clase session manager y valida session para redirigir al login o a home de acuerdo al usuario
     fun validarSession(){
-
+        sessionManager = SessionManager(getSharedPreferences("Carlot", Context.MODE_PRIVATE), applicationContext)
+        var user: User? = sessionManager?.getSession()
+        if (user?.rol?.toInt() == 1){
+            startActivity(Intent(this, MainActivity::class.java))
+        }else{
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
     }
 
     // inicia el activity validado en el metodo "validarSession"
@@ -45,9 +63,7 @@ class SplashActivity : AppCompatActivity() {
         Handler().postDelayed({
             // This method will be executed once the timer is over
             // Start your app main activity
-
-            startActivity(Intent(this,LoginActivity::class.java))
-
+            validarSession()
             // close this activity
             finish()
         }, SPLASH_TIME_OUT)

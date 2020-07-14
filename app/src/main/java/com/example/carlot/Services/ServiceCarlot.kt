@@ -2,7 +2,7 @@ package com.example.carlot.Services
 
 import com.example.carlot.Models.Cars
 import com.example.carlot.Models.Request.BodyReserva
-import com.example.carlot.Models.Status
+import com.example.carlot.Models.Request.Status
 import com.example.carlot.Models.User
 import retrofit2.Call
 import retrofit2.http.*

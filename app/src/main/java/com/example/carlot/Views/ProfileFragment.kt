@@ -1,11 +1,13 @@
 package com.example.carlot.Views
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -49,6 +51,8 @@ class ProfileFragment : Fragment() {
     var img_user: ImageView? = null
     var pb_cars: ProgressBar? = null
     var rv_cars: RecyclerView? = null
+    var tv_email: TextView? = null
+    var tv_nombre_completo: TextView? = null
     var gson: Gson? = null
     lateinit var sharedPreferences: SharedPreferences
     // api service
@@ -66,27 +70,20 @@ class ProfileFragment : Fragment() {
         }
         setHasOptionsMenu(true);
 
-        // init shared prefereces
-//        val MY_PREFERENCES = "carlot_preferences"
-//        sharedPreferences = this.activity!!.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE)
-//        val USER_KEY = "user"
-//        if (sharedPreferences.contains(USER_KEY)){
-//            Toast.makeText(context, sharedPreferences.getString(USER_KEY,"") , Toast.LENGTH_SHORT).show()
-//        }
+
         // init session manager
         sharedPreferences = this.activity!!.getSharedPreferences("Carlot", Context.MODE_PRIVATE)
-        sessionManager = SessionManager(sharedPreferences)
-        user = sessionManager!!.getSession()
-        Toast.makeText(context, user?.idPerson.toString(), Toast.LENGTH_SHORT).show()
+        sessionManager = SessionManager(sharedPreferences, context!!)
+        user = sessionManager!!.getSession() // retorna objeto de la clase usuario
+
+
+
         // init variables
         serviceCarLot = RetrofitClient().getClientService()
         gson = Gson()
         // end init variables
 
-
-
-
-
+        initDataOnViewComponents()
         getCarsRetrofit()
 
 
@@ -126,6 +123,12 @@ class ProfileFragment : Fragment() {
     }
 
 
+    fun initDataOnViewComponents(){
+        tv_nombre_completo?.text = "${user?.nombre} ${user?.apellido}"
+        tv_email?.text = user?.correo
+    }
+
+
 
     fun initView(){
 
@@ -133,6 +136,9 @@ class ProfileFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         img_user = vista!!.findViewById(R.id.img_user)
         pb_cars = vista!!.findViewById(R.id.pb_cars)
+        tv_nombre_completo = vista!!.findViewById(R.id.tv_nombre_completo)
+        tv_email = vista!!.findViewById(R.id.tv_email)
+
 
         Picasso.get()
             .load(user?.image)
@@ -164,7 +170,8 @@ class ProfileFragment : Fragment() {
                 Toast.makeText(context,"config",Toast.LENGTH_LONG).show()
             }
             R.id.logout ->{
-
+                sessionManager?.deleteSession()
+                activity?.finish()
             }
 
         }
@@ -207,5 +214,8 @@ class ProfileFragment : Fragment() {
     fun hideProgresBar(){
         pb_cars?.visibility = View.GONE
     }
+
+
+
 
 }

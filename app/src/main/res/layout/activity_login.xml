@@ -93,6 +93,7 @@
 
 
             <ProgressBar
+                android:visibility="gone"
                 android:id="@+id/pb_login"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"

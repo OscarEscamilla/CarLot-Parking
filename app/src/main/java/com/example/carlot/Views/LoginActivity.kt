@@ -16,13 +16,11 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.carlot.R
+import com.example.carlot.Utils.SessionManager
 import com.google.android.material.textfield.TextInputEditText
 
 
 class LoginActivity : AppCompatActivity() {
-
-
-
 
     var et_email:TextInputEditText? = null
     var et_password:TextInputEditText? = null
@@ -57,11 +55,10 @@ class LoginActivity : AppCompatActivity() {
             }else{
                 ocultarTeclado()
                 progresBar?.visibility = View.VISIBLE
-                validate(str_pass, str_email )
+                validateUser(str_pass, str_email )
             }
         }
     }
-
 
     fun initViewComponents(){
         et_email = findViewById(R.id.et_email)
@@ -76,8 +73,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-
-    fun validate(password: String, email: String) {
+    fun validateUser(password: String, email: String) {
         // Instantiate the RequestQueue.
         val queue = Volley.newRequestQueue(applicationContext)
         val url = "https://carlotapinode.herokuapp.com/login_user/$password/$email"
@@ -87,19 +83,16 @@ class LoginActivity : AppCompatActivity() {
             com.android.volley.Response.Listener<String> { response ->
                 if (response.isNullOrEmpty()){
                     Toast.makeText(applicationContext,"Correo o contraseña incorrectos...", Toast.LENGTH_SHORT).show()
+                    progresBar?.visibility = View.GONE
                 }else{
                     Log.e("rsponseLogin", response)
                     // guardamos en shared preference
-                    val USER_KEY = "user"
-
-                    val editor = sharedPreferences.edit()
-                    editor.putString(USER_KEY, response)
-                    editor.commit()
+                    var sessionManager = SessionManager(sharedPreferences, applicationContext)
+                    sessionManager.saveSession(response)
                     progresBar?.visibility = View.GONE
-
+                    finish()
                     var i: Intent = Intent(this, MainActivity::class.java)
                     startActivity(i!!)
-
                     //gson.fromJson()
                 }
             },
