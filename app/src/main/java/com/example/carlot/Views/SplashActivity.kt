@@ -46,11 +46,22 @@ class SplashActivity : AppCompatActivity() {
     fun validarSession(){
         sessionManager = SessionManager(getSharedPreferences("Carlot", Context.MODE_PRIVATE), applicationContext)
         var user: User? = sessionManager?.getSession()
-        if (user?.rol?.toInt() == 1){
-            startActivity(Intent(this, MainActivity::class.java))
-        }else{
-            startActivity(Intent(this, LoginActivity::class.java))
+
+        Log.e("user-validate", user?.rol.toString())
+
+        when(user?.rol?.toInt()){
+            1 -> startActivity(Intent(this, MainActivity::class.java))
+
+            0 -> startActivity(Intent(this, HomeParkActivity::class.java))
+
+            else -> startActivity(Intent(this, LoginActivity::class.java))
         }
+
+//        if (user?.rol?.toInt() == 1){
+//            startActivity(Intent(this, MainActivity::class.java))
+//        }else{
+//            startActivity(Intent(this, LoginActivity::class.java))
+//        }
     }
 
     // inicia el activity validado en el metodo "validarSession"

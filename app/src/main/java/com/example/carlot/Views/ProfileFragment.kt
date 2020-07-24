@@ -69,25 +69,15 @@ class ProfileFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         setHasOptionsMenu(true);
-
-
         // init session manager
-        sharedPreferences = this.activity!!.getSharedPreferences("Carlot", Context.MODE_PRIVATE)
-        sessionManager = SessionManager(sharedPreferences, context!!)
+        sessionManager = SessionManager(this.activity!!.getSharedPreferences("Carlot", Context.MODE_PRIVATE), context!!)
         user = sessionManager!!.getSession() // retorna objeto de la clase usuario
-
-
-
         // init variables
         serviceCarLot = RetrofitClient().getClientService()
         gson = Gson()
         // end init variables
 
-        initDataOnViewComponents()
         getCarsRetrofit()
-
-
-
 
 
     }
@@ -99,6 +89,7 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         vista = inflater.inflate(R.layout.fragment_profile, container, false)
         initView()
+        initDataOnViewComponents()
         return vista
     }
 
@@ -125,7 +116,9 @@ class ProfileFragment : Fragment() {
 
     fun initDataOnViewComponents(){
         tv_nombre_completo?.text = "${user?.nombre} ${user?.apellido}"
+ 
         tv_email?.text = user?.correo
+
     }
 
 

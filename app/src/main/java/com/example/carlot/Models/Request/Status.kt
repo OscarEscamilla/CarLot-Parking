@@ -1,4 +1,4 @@
 package com.example.carlot.Models.Request
 
-class Status() {
+class Status(Status: String) {
 }

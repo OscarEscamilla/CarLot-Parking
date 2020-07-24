@@ -47,6 +47,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email"
+                    android:textColor="@color/common_google_signin_btn_text_light_default"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:layout_editor_absoluteX="10dp"
@@ -66,6 +67,7 @@
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/common_google_signin_btn_text_light_default"
                     android:inputType="textPassword"
                     tools:layout_editor_absoluteX="10dp"
                     tools:layout_editor_absoluteY="153dp" />
@@ -81,13 +83,16 @@
                 android:textSize="15sp" />
 
             <Button
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
                 android:id="@+id/btn_register"
                 android:layout_width="match_parent"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:textColor="@color/colorPrimaryDark"
                 android:outlineAmbientShadowColor="@color/colorPrimary"
                 android:layout_gravity="center"
                 android:pointerIcon="none"
+                android:background="@drawable/outlinebutton"
                 android:text="SIGN UP"
                 android:textSize="15sp" />
 

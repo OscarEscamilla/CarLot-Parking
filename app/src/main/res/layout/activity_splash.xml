@@ -19,6 +19,7 @@
 
     </ImageView>
 
+    <!--
     <ProgressBar
         android:layout_marginTop="150dp"
         android:layout_width="70dp"
@@ -27,5 +28,14 @@
         android:indeterminateTint="@android:color/white"
         style="?android:attr/progressBarStyle">
     </ProgressBar>
+    -->
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:layout_marginTop="70dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:indicatorName="BallPulseIndicator"
+        />
 
 </LinearLayout>

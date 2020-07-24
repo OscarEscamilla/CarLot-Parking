@@ -1,5 +1,6 @@
 package com.example.carlot.Views
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,12 +8,22 @@ import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import com.example.carlot.Models.Cars
 import com.example.carlot.Models.Parks
+import com.example.carlot.Models.User
 import com.example.carlot.R
+import com.example.carlot.Services.RetrofitClient
+import com.example.carlot.Services.ServiceCarlot
+import com.example.carlot.Utils.SessionManager
+import com.example.carlot.Views.Adapters.CarsAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detalle_park.*
+import org.json.JSONArray
+import retrofit2.Call
+import retrofit2.Callback
 
 class DetalleParkActivity : AppCompatActivity() {
 
@@ -25,6 +36,12 @@ class DetalleParkActivity : AppCompatActivity() {
     var tv_description: TextView? = null
     var img_park: ImageView? = null
     var btn_float_reserva: FloatingActionButton? = null
+    var cars: ArrayList<Cars>? = null
+    var user: User? =  null
+    var gson: Gson? = null
+    var sessionManager: SessionManager? = null
+
+    var serviceCarLot: ServiceCarlot? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +55,8 @@ class DetalleParkActivity : AppCompatActivity() {
         finish()
         return true
     }
+
+
 
     fun initComponents(){
 
@@ -60,6 +79,12 @@ class DetalleParkActivity : AppCompatActivity() {
             showAlertReserva()
             //Snackbar.make(it, "Reserva...", Snackbar.LENGTH_SHORT).show()
         }
+
+        serviceCarLot = RetrofitClient().getClientService()
+        gson = Gson()
+        sessionManager = SessionManager(getSharedPreferences("Carlot", Context.MODE_PRIVATE), applicationContext)
+        user = sessionManager!!.getSession()
+
     }
 
     fun showAlertReserva(){
@@ -67,29 +92,56 @@ class DetalleParkActivity : AppCompatActivity() {
         var inflate_view = inflater.inflate(R.layout.alert_reserva, null)
         // init components from layorut inflate_view
         var time_reserva: TimePicker = inflate_view.findViewById(R.id.timePicker)
-        var et_placas: EditText = inflate_view.findViewById(R.id.et_placas)
+//        var sp_cars: Spinner = inflate_view.findViewById(R.id.sp_cars)
+//        var cars = arrayOf("toyotas", "hummer", "ferrari")
+//        var arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, cars)
+//        sp_cars.adapter = arrayAdapter
+
+
         // end init componenst
         var horaReservaPicker: String? = null
         time_reserva.setOnTimeChangedListener { view, hourOfDay, minute ->
             horaReservaPicker = "$hourOfDay:$minute"
         }
         var alert = AlertDialog.Builder(this)
-
         alert.setView(inflate_view);
         alert.setCancelable(false)
         alert.setNegativeButton("Cancelar", null);
         alert.setPositiveButton("Siguiente"){dialog, which ->
-
             var intent: Intent = Intent(this, PaymentActivity::class.java)
-            intent.putExtra("placas", et_placas.text)
             intent.putExtra("hora_arrivo",horaReservaPicker)
             intent.putExtra("id_park", park!!.id)
+            intent.putExtra("id_person", user!!.id)
+            //Log.i("data-spiner", sp_cars.selectedItem.toString())
             startActivity(intent)
         }
 
         var create_alert = alert.create()
         create_alert.show()
 
+    }
+
+    fun getCarsRetrofit() {
+        var mCall = serviceCarLot?.getCars(user?.id.toString())
+        mCall?.enqueue(object : Callback<List<Cars>> {
+            override fun onResponse(
+                call: Call<List<Cars>?>?,
+                response: retrofit2.Response<List<Cars>?>?
+            ) {
+                if (response!!.isSuccessful()){
+                    var data = JSONArray(gson?.toJson(response.body()))
+                    for (i in 0..data.length() -1){
+                        var car = gson?.fromJson(data.get(i).toString(), Cars::class.java)
+                        cars?.add(car!!)
+                    }
+                }
+            }
+            override fun onFailure(call: Call<List<Cars>?>, t: Throwable?) {
+                if (call.isCanceled()) {
+
+                }
+            }
+        })
     }
 
     fun setDataIntentToView(){

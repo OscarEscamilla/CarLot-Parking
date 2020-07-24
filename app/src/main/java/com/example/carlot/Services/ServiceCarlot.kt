@@ -19,7 +19,7 @@ interface ServiceCarlot {
 
 
     @POST("/create_reserva")
-    fun createReserva(@Body reserva: BodyReserva): Call<Status>
+    fun createReserva(@Body bodyReserva: BodyReserva): Call<BodyReserva>
 
 
     @GET("/get_cars/{id}")

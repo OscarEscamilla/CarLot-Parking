@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.carlot.Models.User
 import com.example.carlot.R
 import com.example.carlot.Utils.SessionManager
 import com.google.android.material.textfield.TextInputEditText
@@ -89,10 +90,17 @@ class LoginActivity : AppCompatActivity() {
                     // guardamos en shared preference
                     var sessionManager = SessionManager(sharedPreferences, applicationContext)
                     sessionManager.saveSession(response)
+                    var user: User? = sessionManager.getSession()
+
+                    Log.e("user-validate", user?.rol.toString())
                     progresBar?.visibility = View.GONE
                     finish()
-                    var i: Intent = Intent(this, MainActivity::class.java)
-                    startActivity(i!!)
+
+                    when(user?.rol?.toInt()) {
+                        1 -> startActivity(Intent(this, MainActivity::class.java))
+
+                        0 -> startActivity(Intent(this, HomeParkActivity::class.java))
+                    }
                     //gson.fromJson()
                 }
             },
