@@ -18,7 +18,10 @@ import com.android.volley.toolbox.Volley
 import com.example.carlot.Models.User
 import com.example.carlot.R
 import com.example.carlot.Utils.SessionManager
+import com.example.carlot.Views.Parks.HomeParkActivity
+import com.example.carlot.Views.Users.MainActivity
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -26,9 +29,10 @@ class LoginActivity : AppCompatActivity() {
     var et_email:TextInputEditText? = null
     var et_password:TextInputEditText? = null
 
-    var btn_login: Button? = null
-
     var progresBar: ProgressBar? = null
+
+    var btn_login: Button? = null
+    var btn_signup: Button? = null
 
     lateinit var sharedPreferences: SharedPreferences
 
@@ -59,12 +63,17 @@ class LoginActivity : AppCompatActivity() {
                 validateUser(str_pass, str_email )
             }
         }
+
+        btn_register?.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
     }
 
     fun initViewComponents(){
         et_email = findViewById(R.id.et_email)
         et_password = findViewById(R.id.et_password)
         btn_login = findViewById<Button>(R.id.btn_login)
+        btn_signup = findViewById<Button>(R.id.btn_register)
         progresBar = findViewById(R.id.pb_login)
         progresBar?.visibility = View.GONE
 

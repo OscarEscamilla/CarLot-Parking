@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,12 +14,14 @@ import com.example.carlot.Models.Parks
 import com.example.carlot.R
 import com.squareup.picasso.Picasso
 
-class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: ClickListener): RecyclerView.Adapter<ParksAdapter.ViewHolder>() {
+open class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: ClickListener):
+    RecyclerView.Adapter<ParksAdapter.ViewHolder>(),
+    View.OnClickListener,
+    Filterable {
 
     var items: ArrayList<Parks>
     var items_filtered: ArrayList<Parks>
     var contexto: Context
-
 
 
 
@@ -32,6 +36,9 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: Cli
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParksAdapter.ViewHolder {
         val vista = LayoutInflater.from(contexto).inflate(R.layout.item_park, parent, false)
         var view_holder =  ViewHolder(vista, listener)
+
+
+
         return view_holder
     }
 
@@ -54,6 +61,8 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: Cli
 
 
     }
+
+
 
     fun filtrar(texto: String) {
         // Elimina todos los datos del ArrayList que se cargan en los
@@ -79,6 +88,7 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: Cli
     }
 
 
+
     // class holder
     class ViewHolder(vista: View, listener: ClickListener): RecyclerView.ViewHolder(vista), View.OnClickListener{
         var v = vista
@@ -101,4 +111,39 @@ class ParksAdapter(items: ArrayList<Parks>, contexto: Context, var listener: Cli
         }
 
     }
+
+    override fun onClick(v: View?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getFilter(): Filter {
+        return exampleFilter
+    }
+
+    private val exampleFilter: Filter = object : Filter() {
+        override fun performFiltering(constraint: CharSequence): FilterResults {
+            val filteredList: MutableList<Parks> = ArrayList()
+            if (constraint == null || constraint.length == 0) {
+                filteredList.addAll(items)
+            } else {
+                val filterPattern =
+                    constraint.toString().toLowerCase().trim { it <= ' ' }
+                for (item in items) {
+                    if (item.name?.toLowerCase()!!.contains(filterPattern)) {
+                        filteredList.add(item)
+                    }
+                }
+            }
+            val results = FilterResults()
+            results.values = filteredList
+            return results
+        }
+        override fun publishResults(constraint: CharSequence, results: FilterResults) {
+            items_filtered.clear()
+            items_filtered.addAll(results.values as ArrayList<Parks>)
+            notifyDataSetChanged()
+        }
+    }
+
+
 }

@@ -1,12 +1,14 @@
-package com.example.carlot.Views
+package com.example.carlot.Views.Users
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.carlot.R
+import com.example.carlot.Views.Users.HomeFragment
+import com.example.carlot.Views.Users.ParksFragment
+import com.example.carlot.Views.Users.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

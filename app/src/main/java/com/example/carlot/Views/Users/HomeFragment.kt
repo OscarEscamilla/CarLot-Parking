@@ -1,5 +1,6 @@
-package com.example.carlot.Views
+package com.example.carlot.Views.Users
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -47,7 +48,8 @@ class HomeFragment: Fragment() {
 
         ll_historial = vista.findViewById(R.id.ll_historial)
         ll_historial?.setOnClickListener {
-            Toast.makeText(context,"clicked histori", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context,"clicked histori", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this.context, HistorialActivity::class.java))
         }
         return vista
     }

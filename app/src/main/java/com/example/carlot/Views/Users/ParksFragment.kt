@@ -1,15 +1,13 @@
-package com.example.carlot.Views
+package com.example.carlot.Views.Users
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,7 +40,7 @@ class ParksFragment : Fragment() {
 
     private var vista: View? = null
     var recycler_parks: RecyclerView? = null
-    var adapter: RecyclerView.Adapter<*>? = null
+    var adapter: ParksAdapter? = null
     var layout_manager: RecyclerView.LayoutManager? = null
 
     var toolbar: Toolbar? = null
@@ -119,11 +117,12 @@ class ParksFragment : Fragment() {
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 Log.i("query_submit", query)
-
+                adapter?.filter?.filter(query)
                 return false
             }
             override fun onQueryTextChange(newText: String): Boolean {
                 Log.i("query_text", newText)
+                adapter?.filter?.filter(newText)
                 return false
             }
         })

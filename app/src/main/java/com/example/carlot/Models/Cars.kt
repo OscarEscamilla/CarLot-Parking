@@ -1,28 +1,40 @@
 package com.example.carlot.Models
 
-class Cars(id: Int,
-           matricula: String,
-           marca: String,
-           color: String,
-           descripcion: String,
-           idPerson: Int){
+import com.google.gson.annotations.SerializedName
 
-    var id: Int? = null
-    var matricula: String? = null
-    var marca: String? = null
-    var color: String? = null
-    var descripcion: String? = null
-    var idPerson: Int? = null
+//class Cars(id: Int,
+//           matricula: String,
+//           marca: String,
+//           color: String,
+//           descripcion: String,
+//           idPerson: Int){
+//
+//    var id: Int? = null
+//    var matricula: String? = null
+//    var marca: String? = null
+//    var color: String? = null
+//    var descripcion: String? = null
+//    var idPerson: Int? = null
+//
+//
+//
+//    init {
+//        this.id = id
+//        this.matricula = matricula
+//        this.marca = marca
+//        this.color = color
+//        this.descripcion = descripcion
+//        this.idPerson = idPerson
+//    }
+//
+//}
 
+data class Cars (
 
-
-    init {
-        this.id = id
-        this.matricula = matricula
-        this.marca = marca
-        this.color = color
-        this.descripcion = descripcion
-        this.idPerson = idPerson
-    }
-
-}
+    @SerializedName("id") val id : Int,
+    @SerializedName("matricula") val matricula : String,
+    @SerializedName("marca") val marca : String,
+    @SerializedName("color") val color : String,
+    @SerializedName("descripcion") val descripcion : String,
+    @SerializedName("id_person") val id_person : Int
+)

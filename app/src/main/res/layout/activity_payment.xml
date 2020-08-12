@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:id="@+id/layout_pyment"
     android:layout_height="match_parent"
-    tools:context=".Views.PaymentActivity">
+    tools:context=".Views.Users.PaymentActivity">
 
     <Toolbar
         android:elevation="4dp"
@@ -26,7 +26,7 @@
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
-            android:elevation="4dp"
+            app:cardElevation="4dp"
             app:cardCornerRadius="6dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -43,6 +43,14 @@
                     android:layout_height="174dp"
                     android:src="@drawable/credit" />
 
+                <com.stripe.android.view.CardInputWidget
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/cardInputWidget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"/>
+
                 <Button
                     android:id="@+id/btn_scan"
                     android:text="Scan card"
@@ -55,40 +63,6 @@
 
                 </Button>
 
-                <EditText
-                    android:layout_marginTop="10dp"
-                    android:hint="Numero de tarjeta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </EditText>
-                <EditText
-                    android:layout_marginTop="5dp"
-                    android:hint="Nombre del titular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </EditText>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:layout_weight="1"
-                        android:layout_marginTop="5dp"
-                        android:hint="MM/YY"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                    </EditText>
-                    <EditText
-                        android:layout_weight="1"
-                        android:layout_marginTop="5dp"
-                        android:hint="CVV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                    </EditText>
-
-                </LinearLayout>
 
                 <Button
                     android:id="@+id/btn_confimar"

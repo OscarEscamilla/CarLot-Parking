@@ -3,16 +3,15 @@ package com.example.carlot.Views
 
 import android.content.Context
 import android.content.Intent
-import android.net.wifi.p2p.WifiP2pManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import com.example.carlot.Models.Parks
 import com.example.carlot.Models.User
 import com.example.carlot.R
 import com.example.carlot.Utils.SessionManager
-import java.util.*
+import com.example.carlot.Views.Parks.HomeParkActivity
+import com.example.carlot.Views.Users.MainActivity
 
 class SplashActivity : AppCompatActivity() {
 

@@ -1,8 +1,9 @@
-package com.example.carlot.Views
+package com.example.carlot.Views.Users
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.ArrayMap
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -109,17 +110,24 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                 for (i in 0..data.length() - 1){
                     var item = JSONObject(data.get(i).toString())
 
-                    var latitud = item.get("latitud") as BigDecimal
-                    var longitud = item.get("longitud") as BigDecimal
+                    var latitud: String = item.get("latitud") as String
+                    var longitud: String = item.get("longitud") as String
+
+                    Log.e("ParlLatLonBefore",  item.get("latitud").toString() + " " +  item.get("longitud").toString())
+
+                    var convertLatitude: Double = latitud.toDouble()
+                    var convertLongitude: Double = longitud.toDouble()
 
 
-                    var ubicacion_park = LatLng(latitud as Double, longitud as Double )
+                    Log.e("ParlLatLonAfter",  convertLatitude.toString() + " " + convertLongitude.toString())
+
+                    var ubicacion_park = LatLng(convertLatitude,convertLongitude )
 
                     mMap.addMarker(
                         MarkerOptions()
                             .position(ubicacion_park)
                             .title( item.get("nombre_park").toString())
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.porton))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.estacionamiento))
                     )
 
                     parks!!.add(
@@ -205,6 +213,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                         val zoomLevel = 15.0.toFloat()
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacion_dos, zoomLevel))
                     }
+                    getParks()
                 }
             }
         }
@@ -233,7 +242,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
         when(requestCode){
             // cuando es igual al codigo de solicitu de ubicacion
             CODIGO_SOLICITUD -> {
@@ -244,7 +252,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                 }else{
                     Toast.makeText(this, "No tenemos permiso de acceder a su ubicación", Toast.LENGTH_LONG).show()
                     finish()
-
                 }
             }
         }
@@ -260,6 +267,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         super.onPause()
         stopUpdatesLocation()
     }
+
+
+    data class Ubicaciones(val name: String, val latitud: Int, val longitud: Int)
 
 
 }

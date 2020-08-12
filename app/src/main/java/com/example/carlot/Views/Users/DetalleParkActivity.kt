@@ -1,4 +1,4 @@
-package com.example.carlot.Views
+package com.example.carlot.Views.Users
 
 import android.content.Context
 import android.content.Intent
@@ -15,12 +15,9 @@ import com.example.carlot.R
 import com.example.carlot.Services.RetrofitClient
 import com.example.carlot.Services.ServiceCarlot
 import com.example.carlot.Utils.SessionManager
-import com.example.carlot.Views.Adapters.CarsAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_detalle_park.*
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -78,6 +75,8 @@ class DetalleParkActivity : AppCompatActivity() {
 //            startActivity(intent)
             showAlertReserva()
             //Snackbar.make(it, "Reserva...", Snackbar.LENGTH_SHORT).show()
+
+
         }
 
         serviceCarLot = RetrofitClient().getClientService()
@@ -115,6 +114,8 @@ class DetalleParkActivity : AppCompatActivity() {
             //Log.i("data-spiner", sp_cars.selectedItem.toString())
             startActivity(intent)
         }
+
+
 
         var create_alert = alert.create()
         create_alert.show()

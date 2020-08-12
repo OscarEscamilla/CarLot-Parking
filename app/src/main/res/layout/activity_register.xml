@@ -10,21 +10,6 @@
     tools:context=".Views.LoginActivity">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="173dp"
-        android:layout_height="170dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/logo"
-        app:civ_border_color="#FFFF"
-        app:civ_border_width="2dp" />
-
-
-
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
@@ -39,12 +24,47 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+            <TextView
+                android:textColor="@color/colorPrimary"
+                style="@android:style/TextAppearance.Material.Headline"
+                android:text="Registrate y dejanos ser el asistente de tu destino..."
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="Nombre">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_nombre"
+                    android:textColor="@color/common_google_signin_btn_text_light_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="10dp"
+                    tools:layout_editor_absoluteY="153dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="Apellidos">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_apellidos"
+                    android:textColor="@color/common_google_signin_btn_text_light_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="10dp"
+                    tools:layout_editor_absoluteY="153dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="Email">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email"
                     android:textColor="@color/common_google_signin_btn_text_light_default"
@@ -52,7 +72,22 @@
                     android:layout_height="wrap_content"
                     tools:layout_editor_absoluteX="10dp"
                     tools:layout_editor_absoluteY="153dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+
+                android:hint="Telefono">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_telefono"
+                    android:inputType="phone"
+                    android:textColor="@color/common_google_signin_btn_text_light_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="10dp"
+                    tools:layout_editor_absoluteY="153dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -78,12 +113,11 @@
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="LOG IN"
+                android:text="SIGN UP"
                 android:textColor="@android:color/white"
                 android:textSize="15sp" />
 
-            <Button
-
+            <!--<Button
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:id="@+id/btn_register"
@@ -95,7 +129,7 @@
                 android:pointerIcon="none"
                 android:background="@drawable/outlinebutton"
                 android:text="SIGN UP"
-                android:textSize="15sp" />
+                android:textSize="15sp" />-->
 
 
             <ProgressBar

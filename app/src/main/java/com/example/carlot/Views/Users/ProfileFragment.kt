@@ -1,7 +1,6 @@
-package com.example.carlot.Views
+package com.example.carlot.Views.Users
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
@@ -54,13 +53,14 @@ class ProfileFragment : Fragment() {
     var tv_email: TextView? = null
     var tv_nombre_completo: TextView? = null
     var gson: Gson? = null
+    var sessionManager: SessionManager? = null
+    var user: User? = null
     lateinit var sharedPreferences: SharedPreferences
     // api service
     var serviceCarLot: ServiceCarlot? = null
     var itemsCars = ArrayList<Cars>()
     var adapterCars: CarsAdapter? = null
-    var sessionManager: SessionManager? = null
-    var user: User? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,8 +135,8 @@ class ProfileFragment : Fragment() {
 
         Picasso.get()
             .load(user?.image)
-            .placeholder(R.drawable.placeholder)
-            .error(R.drawable.placeholder)
+            .placeholder(R.drawable.defaultuser)
+            .error(R.drawable.defaultuser)
             .into(img_user);
 
         rv_cars = vista!!.findViewById(R.id.rv_cars)

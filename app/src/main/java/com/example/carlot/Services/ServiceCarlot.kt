@@ -1,6 +1,7 @@
 package com.example.carlot.Services
 
 import com.example.carlot.Models.Cars
+import com.example.carlot.Models.HistorialBody
 import com.example.carlot.Models.Request.BodyReserva
 import com.example.carlot.Models.Request.Status
 import com.example.carlot.Models.User
@@ -26,8 +27,8 @@ interface ServiceCarlot {
     fun getCars(@Path("id") id: String): Call<List<Cars>>
 
 
-
-
+    @GET("/get_historial/{id}")
+    fun getHistorial(@Path("id") id: String): Call<List<HistorialBody>>
 
 
 }

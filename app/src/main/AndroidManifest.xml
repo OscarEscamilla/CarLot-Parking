@@ -13,8 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Views.HomeParkActivity"></activity>
-        <activity android:name=".Views.PaymentActivity" />
+        <activity android:name=".Views.Users.HistorialActivity"></activity>
+        <activity android:name=".Views.RegisterActivity" />
+        <activity android:name=".Views.Parks.HomeParkActivity" />
+        <activity android:name=".Views.Users.PaymentActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -31,15 +33,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Views.MapActivity"
-            android:parentActivityName=".Views.MainActivity" />
+            android:name=".Views.Users.MapActivity"
+            android:parentActivityName=".Views.Users.MainActivity" />
         <activity android:name=".Views.LoginActivity" />
         <activity
-            android:name=".Views.MainActivity"
+            android:name=".Views.Users.MainActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Views.DetalleParkActivity"
-            android:parentActivityName=".Views.MainActivity" />
+            android:name=".Views.Users.DetalleParkActivity"
+            android:parentActivityName=".Views.Users.MainActivity" />
     </application>
 
 </manifest>
